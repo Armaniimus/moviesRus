@@ -1,0 +1,31 @@
+.box {
+    border: solid black 1px;
+}
+
+.button {
+    border-radius: 2px;
+    border-style: solid;
+    border-color: #500;
+    border-width: 1px;
+
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+
+    color: white;
+    background-color: #900;
+
+    padding: 5px;
+    max-width: 300px;
+    width: 100%;
+}
+
+.button:hover {
+    border-top-width: 2px;
+    border-left-width: 2px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+
+    background-color: #A00;
+}
