@@ -1,0 +1,130 @@
+1. SELECT mov_title, mov_year FROM movie;
+
+2. SELECT mov_year FROM movie WHERE mov_title = "American Beauty";
+
+3. SELECT mov_year, mov_title FROM movie WHERE mov_year = 1999;
+
+4. SELECT mov_year, mov_title FROM movie WHERE mov_year < 1998;
+
+5. SELECT reviewer.rev_name, movie.mov_title
+FROM reviewer, rating, movie
+WHERE movie.mov_id=rating.mov_id
+AND reviewer.rev_id=rating.rev_id
+
+6.1 SELECT rev_name, rev_stars from ( reviewer
+INNER JOIN rating ON reviewer.rev_id = rating.rev_id);
+
+6.2 SELECT rev_name, rev_stars 
+FROM reviewer, rating 
+WHERE reviewer.rev_id = rating.rev_id AND rev_stars >= 7 and reviewer.rev_name is not null
+
+7.1 SELECT mov_title from (movie
+INNER JOIN rating ON movie.mov_id = rating.mov_id)
+WHERE num_o_ratings = 0;
+
+7.2 SELECT mov_title 
+FROM movie
+WHERE movie.mov_id NOT IN (
+  SELECT mov_id
+  FROM rating
+  WHERE mov_id IS NOT NULL);
+
+8. SELECT mov_title, mov_id 
+FROM movie
+WHERE mov_id = 905 or mov_id = 907 or mov_id = 917.
+
+9. SELECT mov_title, mov_year
+FROM movie
+WHERE mov_title LIKE '%Boogie%Nights%'
+
+10. SELECT act_id, act_fname, act_lname 
+FROM `actor` 
+WHERE act_fname = 'Woody' and act_lname = 'Allen'
+
+
+JOINS
+
+1.
+SELECT rev_name, rev_stars
+FROM rating 
+INNER JOIN reviewer ON rating.rev_id = reviewer.rev_id
+WHERE rev_stars IS NULL;
+
+2.
+SELECT act_fname, act_lname FROM ((movie 
+INNER JOIN `movie cast` on movie.mov_id = `movie cast`.mov_id)
+INNER JOIN actor on `movie cast`.act_id = actor.act_id)                            
+WHERE mov_title = 'Annie Hall'
+
+3.
+SELECT dir_fname, dir_lname, mov_title
+FROM director
+NATURAL JOIN movie_direction
+NATURAL JOIN movie
+NATURAL JOIN movie_cast
+WHERE role IS NOT NULL
+AND mov_title='Eyes Wide Shut';
+
+4.
+SELECT dir_fname, dir_lname, mov_title
+FROM movie, director, movie_direction, movie_cast
+WHERE movie.mov_id = movie_cast.mov_id 
+AND movie_direction.mov_id = movie.mov_id
+AND movie_direction.dir_id = director.dir_id
+AND role = 'Sean Maguire'
+
+5.SELECT act_fname, act_lname, act_gender, mov_year
+FROM actor, movie_cast, movie
+WHERE movie.mov_id = movie_cast.mov_id
+AND movie_cast.act_id = actor.act_id
+AND (mov_year < 1990
+OR mov_year > 2000)
+
+6. SELECT dir_fname, dir_lname, count(gen_title)
+FROM director, movie_direction, movie, movie_genres, genres
+WHERE movie.mov_id = movie_direction.mov_id
+AND director.dir_id = movie_direction.dir_id
+AND movie.mov_id = movie_genres.mov_id
+AND movie_genres.gen_id = genres.gen_id
+GROUP BY director.dir_id ASC
+
+7.
+SELECT mov_title, mov_year, gen_title
+FROM ((movie INNER JOIN movie_genres ON movie.mov_id = movie_genres.mov_id)
+INNER JOIN genres ON movie_genres.gen_id = genres.gen_id)
+
+8.
+SELECT mov_title, gen_title, dir_fname, dir_lname
+FROM ((((movie INNER JOIN movie_genres ON movie.mov_id = movie_genres.mov_id)
+INNER JOIN genres ON genres.gen_id = movie_genres.gen_id)
+INNER JOIN movie_direction ON movie.mov_id = movie_direction.mov_id)
+INNER JOIN director ON movie_direction.dir_id = director.dir_id)
+
+9.
+SELECT mov_title, mov_time, mov_dt_rel, dir_fname, dir_lname
+FROM ((movie JOIN movie_direction ON movie.mov_id = movie_direction.mov_id)
+INNER JOIN director ON movie_direction.dir_id = director.dir_id)
+WHERE mov_dt_rel BETWEEN '0000-00-00' AND '1989-01-01'
+ORDER BY mov_dt_rel DESC
+
+10.
+SELECT  ROUND(AVG(mov_time)), count(mov_title), gen_title
+FROM ((genres INNER JOIN movie_genres ON genres.gen_id = movie_genres.gen_id)
+INNER JOIN movie ON movie.mov_id = movie_genres.mov_id)
+GROUP by genres.gen_title ASC
+
+11.
+SELECT mov_year, dir_fname, dir_lname, act_fname, act_lname, role
+FROM (((( movie INNER JOIN movie_cast on movie.mov_id = movie_cast.mov_id)
+INNER JOIN actor ON actor.act_id = movie_cast.act_id)
+INNER JOIN movie_direction ON movie.mov_id = movie_direction.mov_id)
+INNER JOIN director ON movie_direction.dir_id = director.dir_id)
+WHERE mov_time = (SELECT min(mov_time) 
+	FROM movie
+)
+
+SELECT name, job name, salary, grade, department name
+FROM department, employee
+WHERE department.id = employee.id
+AND <> clerk
+
