@@ -1,12 +1,12 @@
 <?php
 // router
-require_once 'Router/Router-v2.2.php';
 require_once 'config.php';
+require_once 'Router/Router-v2.3.php';
+
 
 // controllers (are dynamicly called)
 
 // genericModels
-require_once "Model/traits/ValidatePHP_ID-v2.0.php";
 require_once 'Model/DataHandler-v5.0.php';
 require_once 'Model/FileHandler-v2.0.php';
 require_once 'Model/HtmlElements-v2.0.php';
@@ -18,18 +18,9 @@ require_once 'Model/TemplatingSystem-v2.0.php';
 
 
 // Router and return
-$Router = new Router(APP_DIR);
+$Router = new Router(APP_DIR, 'main');
 $echo = $Router->run();
-
-// if router could find anything based on the url
-if ($Router->error) {
-    require_once 'Controller/Controller_main.php';
-    $controller = new Controller_main();
-    $echo = $controller->mydefault();
-}
 
 echo $echo;
 echo $Router->errorMessage;
-// print_r($Router->getFilterPackets());
-// print_r($_SESSION);
 ?>
