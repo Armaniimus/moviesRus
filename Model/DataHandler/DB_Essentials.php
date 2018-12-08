@@ -3,8 +3,8 @@
 /**
  *  This class is used to contain the neccesary crud functions to interact with a database
  *
- * @property array $lastSelect used to hold the last select bindings
- * @property object $pdo a variable to store the connection
+ * @property array  $lastSelect     used to hold the last select bindings
+ * @property object $pdo            a variable to store the connection
 */
 class DB_Essentials {
     public $lastSelect = [];
@@ -13,11 +13,11 @@ class DB_Essentials {
     /**
      * constructor for the datahandler
      *
-     * @param string $host database host for the connection
-     * @param string $database database name for the connection
-     * @param string $username database username for the connection
-     * @param string $password database password for the connection
-     * @param string (optional) $dbtype database type for the connection
+     * @param string $host          database host for the connection
+     * @param string $database      database name for the connection
+     * @param string $username      database username for the connection
+     * @param string $password      database password for the connection
+     * @param string $dbtype        (optional) database type for the connection
      */
     public function __construct(string $host, string $database, string $username, string $password, string $dbtype = "mysql") {
         try {
@@ -34,9 +34,9 @@ class DB_Essentials {
     /**
      * used to insert data in the database
      *
-     * @param string $sql the sql query
-     * @param array (optional) $bindings the bindings used in the query
-     * @return int last insert id
+     * @param string    $sql the sql query
+     * @param array     $bindings (optional) the bindings used in the query
+     * @return int      last insert id
      */
     public function createData(string $sql, array $bindings = []) {
         $sth = $this->pdo->prepare($sql);
@@ -47,10 +47,10 @@ class DB_Essentials {
     /**
      * reads data from a database
      *
-     * @param string $sql the sql query
-     * @param array (optional) $bindings the bindings for the query
-     * @param boolean (optional) $multiple if you want multiple rows or not
-     * @return array the data from the database
+     * @param string    $sql the sql query
+     * @param array     $bindings (optional) the bindings for the query
+     * @param boolean   $multiple (optional) if you want multiple rows or not
+     * @return array    the data from the database
      */
     public function readData(string $sql, array $bindings = [], bool $multiple = true) {
 
@@ -70,9 +70,9 @@ class DB_Essentials {
     /**
      * updates data in the database
      *
-     * @param string $sql the sql query
-     * @param array $bindings (optional) the bindings for the query
-     * @return int last insert id
+     * @param string    $sql the sql query
+     * @param array     $bindings (optional) the bindings for the query
+     * @return int      last insert id
      */
     public function updateData(string $sql, array $bindings = []) {
         $sth = $this->pdo->prepare($sql);
@@ -83,14 +83,13 @@ class DB_Essentials {
     /**
      * deletes data in the database
      *
-     * @param string $sql the sql query
-     * @param array $bindings (optional) the bindings for the query
-     * @return bool if the query completed or not
+     * @param string    $sql the sql query
+     * @param array     $bindings (optional) the bindings for the query
+     * @return bool     if the query completed or not
      */
     public function deleteData(string $sql, array $bindings = []) {
         $sth = $this->pdo->prepare($sql);
         return $sth->execute($bindings);
     }
 }
-
 ?>
