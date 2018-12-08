@@ -1,70 +1,23 @@
 <?php
 
 /**
+ *  This class is used to contain the neccesary crud functions to interact with a database
  *
- */
+ * @property array $lastSelect used to hold the last select bindings
+ * @property object $pdo a variable to store the connection
+*/
 class DB_Essentials {
-    /**
-     *
-     * a pdo instance
-     *
-     * @var pdo
-     * @access public
-     */
-    public $pdo;
-
-    /**
-     * last select made by the datahandler
-     *
-     * @var array
-     * @access public
-     */
     public $lastSelect = [];
-
-    /**
-     * the host used for the connection
-     *
-     * @var string
-     * @access public
-     */
-    public $host;
-    /**
-     * the database used for the connection
-     *
-     * @var string
-     * @access public
-     */
-    public $database;
-    /**
-     * the username used for the connection
-     *
-     * @var string
-     * @access public
-     */
-    public $username;
-    /**
-     * the password used for the connection
-     *
-     * @var string
-     * @access public
-     */
-    public $password;
-    /**
-     * the database type used for the connection
-     *
-     * @var string
-     * @access public
-     */
-    public $dbtype;
+    private $pdo;
 
     /**
      * constructor for the datahandler
      *
-     * @param string $host database host
-     * @param string $database database name
-     * @param string $username database username
-     * @param string $password database password
-     * @param string (optional) $dbtype database type
+     * @param string $host database host for the connection
+     * @param string $database database name for the connection
+     * @param string $username database username for the connection
+     * @param string $password database password for the connection
+     * @param string (optional) $dbtype database type for the connection
      */
     public function __construct(string $host, string $database, string $username, string $password, string $dbtype = "mysql") {
         try {
@@ -76,12 +29,6 @@ class DB_Essentials {
         } catch(PDOexeption $e) {
             $this->showError("Error: " . $e->getMessage());
         }
-
-        $this->host = $host;
-        $this->database = $database;
-        $this->username = $username;
-        $this->password = $password;
-        $this->dbtype = $dbtype;
     }
 
     /**
