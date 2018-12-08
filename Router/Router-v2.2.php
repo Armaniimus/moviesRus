@@ -1,11 +1,27 @@
 <?php
 /**
- * routs the url to the correct controller
+ * @description
+ * The purpose of this class is to rout the incoming traffic to the right controller.
+ * for this purpose you need to supply the uri with the controllername and methodname you can also send parameter if neccesary.
+ * example www.mywebsite.com/controllername/methodname/param1/param2
+ *
+ * @Requirements
+ * the router requires that all controllers have "Controller_" in front of the name of the file and the class
+ * Also the default method needs to be mydefault
+ *
+ * @first_fallback
+ * the first fallback is the mydefault method if methodname isn't given or doesn't exist
+ * it still depends on a given controllername in the uri
+ *
+ * @second fallback
+ * as secondary fallback a class can be used.
+ * this is specified with the 2nd param of this class.
+ * this fallback always uses the mydefault method
  */
 class Router {
 
     // initialize vars
-    Private $rootUrl;      /** @property int    */
+    Private $rootUrl;           /** @property int    */
     Private $packets;           /** @property array  packets taken raw from the url*/
 
     // core properties
@@ -18,15 +34,17 @@ class Router {
     Public  $filteredPackets;   /** @property array  packets that are sliced at the front*/
     Public  $error;             /** @property string */
     Public  $errorMessage;      /** @property string */
+    Public  $fallBackCtrl;      /** @property string this string needs to be the unique name part of the controller like main in Controller_main.php*/
 
     /**
      * in this constructor the packets property is set and the data for it is gained from the browser URI
      * and this is filtered with the gived rootUrl
      * for example if you have a folder like pc/c/hi/rootprojectcontrol/method/param1/param2
      * a rootUrl of 4 will result in control/method/param1/param2 which you want in this way
-     * @param integer $rootUrl this property is used to determine the offset of the folder
+     * @param integer $rootUrl      this property is used to determine the offset of the folder
+     * @param string  $fallBackCtrl (optional) this string needs to be the unique name part of the controller like main in Controller_main.php
      */
-    function __construct ($rootUrl = "/") {
+    function __construct ($rootUrl = "/", $fallBackCtrl = NULL) {
         // set urlOffset
         $rootUrl = count(explode("/", $rootUrl));
         $this->rootUrl = $rootUrl;
@@ -39,6 +57,9 @@ class Router {
         // Set error messages
         $this->error = NULL;
         $this->errorMessage = NULL;
+
+        // set fallBackCtrl
+        $this->fallBackCtrl = $fallBackCtrl;
 
     }
 
@@ -68,8 +89,23 @@ class Router {
         // check if there are any errors
         if ($this->errorChecking()) {
             return $this->sendToDestination();
-        } else {
-            return FALSE;
+
+        // run fallback
+        } else if ($this->fallBackCtrl) {
+            $oldErrorMessage = $this->errorMessage;
+            $oldErrorCode = $this->error;
+            $this->ctrlName = $this->fallBackCtrl;
+            $this->method = NULL;
+            $this->params = NULL;
+
+            if ($this->errorChecking()) {
+                return $this->sendToDestination();
+
+            } else {
+                $this->errorMessage = "[firstError] => " . $oldErrorMessage . " [fallbackError] => " . $this->errorMessage;
+                $this->error = $oldErrorCode;
+                return FALSE;
+            }
         }
     }
 
@@ -115,7 +151,7 @@ class Router {
         // check if method param is given
         // if not check if there is a default
         if (!$method) {
-            if (!method_exists($this->controller, "default") ) {
+            if (!method_exists($this->controller, "mydefault") ) {
                 $this->error = "E4";
                 $this->errorMessage = "no method was given and no default found";
                 return FALSE;
