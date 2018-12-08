@@ -223,11 +223,11 @@ class FileUploader {
 
         // if there are no php or script tags found return true
         if ($screenedContent === $content) {
-            $return 1;
+            $return = 1;
         } else {
-            $return 0;
+            $return = 0;
         }
-        
+
         unset($content);
         unset($screenedContent);
         return $return;
