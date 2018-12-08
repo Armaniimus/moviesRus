@@ -1,6 +1,7 @@
 <?php
     /**
-     *
+     *  This class is used to provide support for other functions that require the datahandler
+     *  This support includes column type information, columnName info, and column nullValues.
      */
     class DB_Support extends DB_Essentials {
 
@@ -119,10 +120,5 @@
             }
             return $sqlColumnNames;
         }
-
-
-
     }
-
-
 ?>
