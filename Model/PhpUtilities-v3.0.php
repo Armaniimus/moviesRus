@@ -23,8 +23,9 @@ class PhpUtilities {
     * converts regular . to , and adds euro sighn in front */
 
     /**
-     * this method is used to convert numbers in a 2d array from regular US standard to NL standard
-     * @param  array  $array a 2darray to be able to loop through
+     * this method is used to convert numbers in a 2d assocarray from regular US standard to NL standard
+     *
+     * @param  array  $array a 2d assocarray to be able to loop through the array looks like myArray[0]['valuta']
      * @param  string $key   the key to be used to select how to loop through the array
      *
      * @return string        returns the converted array
@@ -39,8 +40,8 @@ class PhpUtilities {
     }
 
     /**
-     * this method is used to convert numbers in a 2d array from NL standard to regular US standard
-     * @param  array  $array a 2darray to be able to loop through
+     * this method is used to convert numbers in a 2d assocarray from NL standard to regular US standard
+     * @param  array  $array a 2d assocarray to be able to loop through the array looks like myArray[0]['valuta']
      * @param  string $key   the key to be used to select how to loop through the array
      *
      * @return string        returns the converted array
