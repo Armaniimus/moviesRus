@@ -8,7 +8,7 @@
     </head>
     <body>
         <header></header>
-        <main>{main}</main>
+        <main>{searchbox}</main>
         <footer></footer>
         <script src="{appdir}/view/javascript/javaScript.js"></script>
     </body>
