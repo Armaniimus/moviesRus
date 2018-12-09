@@ -12,8 +12,6 @@ class Controller_main {
     public function mydefault() {
         $searchbox = file_get_contents("view/partials/search.html");
         $resultbox = $this->Cust_MovieModel->SearchName();
-        var_dump($resultbox);
-        $resultbox = "monkey";
 
         $this->TemplatingSystem->setTemplateData("searchbox", $searchbox);
         $this->TemplatingSystem->setTemplateData("resultbox", $resultbox);
