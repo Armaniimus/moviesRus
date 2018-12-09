@@ -1,4 +1,7 @@
 <?php
+/**
+ * This function automaticly loads the config, router and all model files
+ */
 function myAutoLoad() {
     function loadModels($class) {
         req($class, 'Model');
