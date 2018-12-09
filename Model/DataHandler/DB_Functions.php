@@ -6,8 +6,6 @@
      */
     class DB_Functions extends DB_Support {
 
-        public function __construct() {}
-
         public function countDataResults($tablename, $columnName = "*", $where = "") {
             $sql = "SELECT " . "count" . "($columnName) FROM $tablename $where";
             $sth = $this->PDO->query($sql);

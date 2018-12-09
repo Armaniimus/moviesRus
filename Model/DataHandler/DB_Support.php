@@ -5,8 +5,6 @@
      */
     class DB_Support extends DB_Essentials {
 
-        function __construct() {}
-
         /**
         * This method is used to get tableData from the database like columnNames typeValues and nullValues
         * This data is stored in the class property $this->tableData[$GivenTableName]
