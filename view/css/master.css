@@ -1,5 +1,6 @@
 .box {
     border: solid black 1px;
+    padding: 15px;
 }
 
 .button {
@@ -28,4 +29,5 @@
     border-right-width: 1px;
 
     background-color: #A00;
+    cursor: pointer;
 }
