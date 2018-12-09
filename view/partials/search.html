@@ -1,10 +1,16 @@
-<div class="suggest box col-xs-12 col-m-6">
-    <form class="" action="" method="post">
-        <label for="name">Naam</label><br>
-        <input type="text" name="name" value="" id="name"><br><br>
-        <input class="button" type="submit" name="submit" value="Suggest movie">
-    </form>
+<div class="wrapper col-xs-12 col-m-6">
+    <div class="suggest box">
+        <h2>Zoek je film</h2>
+        <form class="" action="" method="post">
+            <label for="name">Film titel</label><br>
+            <input type="text" name="name" value="" id="name" placeholder="Deel film titel"><br><br>
+            <input class="button" type="submit" name="submit" value="Zoek film">
+        </form>
+    </div>
 </div>
-<div class="box col-xs-12 col-m-6">
-    {resultbox}
+<div class="wrapper col-xs-12 col-m-6">
+    <div class="box">
+        <h2>Resultaten</h2>
+        {resultbox}
+    </div>
 </div>

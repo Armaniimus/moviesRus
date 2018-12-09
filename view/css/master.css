@@ -1,6 +1,13 @@
+.wrapper {
+    padding: 0 5px;
+}
+
 .box {
     border: solid black 1px;
     padding: 15px;
+    margin-bottom: 30px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 .button {
@@ -30,4 +37,61 @@
 
     background-color: #A00;
     cursor: pointer;
+}
+
+.result-table {
+    border-collapse: collapse;
+}
+
+.result-table th,
+.result-table td {
+    padding: 5px;
+}
+
+.result-table th {
+    background-color: #A00;
+    text-shadow: 1px 1px #500;
+    color: white;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+}
+
+
+header {
+    margin: 0;
+    margin-bottom: 5px;
+    background-color: #400;
+    color: white;
+    padding: 10px;
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 5px;
+    background-color: #400;
+    color: white;
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+h2 {
+    margin: -15px -16px 0 -15px;
+    margin-bottom: 5px;
+    background-color: #700;
+    color: white;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: normal;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    border-right: solid black 1px;
+}
+
+main {
+    padding: 15px;
 }
