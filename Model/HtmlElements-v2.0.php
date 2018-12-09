@@ -17,7 +17,7 @@ Class HtmlElements {
      *                                   option[1] width 100%?
      *                                   option[2] future use
      *
-     * @param  array  $extraColumnsArray an array with extra data can be used to extent functionality
+     * @param  array  $extraColumnsArray an array with extra column to be added can be used to extent functionality
      * @param  string $specialColumnName a column title for the extra collumns
      * @return
      */
@@ -138,9 +138,12 @@ Class HtmlElements {
                         $row .= "<td class='$tablename--td'>" . $value[$k] . "</td>";
                     }
 
-                    for ($ii=0; $ii < count($extraColumnsArray[$i]) ; $ii++) {
-                        $row .= $extraColumnsArray[$i][$ii];
+                    if ($extraColumnsArray !== NULL) {
+                        for ($ii=0; $ii < count($extraColumnsArray[$i]) ; $ii++) {
+                            $row .= $extraColumnsArray[$i][$ii];
+                        }
                     }
+
                 $row .= "</tr>";
                 $body .= $row;
                 $i++;
