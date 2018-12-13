@@ -1,3 +1,15 @@
+11.
+SELECT mov_year, dir_fname, dir_lname, act_fname, act_lname, role
+FROM movie 
+INNER JOIN movie_cast on movie.mov_id = movie_cast.mov_id
+INNER JOIN actor ON actor.act_id = movie_cast.act_id
+INNER JOIN movie_direction ON movie.mov_id = movie_direction.mov_id
+INNER JOIN director ON movie_direction.dir_id = director.dir_id
+WHERE mov_time = (
+	SELECT min(mov_time) 
+	FROM movie
+)
+
 
 Write a query in SQL to find all the years which produced a movie that 
 received a rating of 3 or 4, and sort the result in increasing order.
@@ -25,7 +37,8 @@ that movie received and sort the result by movie title.
 SELECT mov_title, rev_stars
 FROM movie, rating
 WHERE movie.mov_id = rating.mov_id
-AND rev_stars = (SELECT max(rev_stars)
+AND rev_stars = (
+	SELECT max(rev_stars)
 	FROM rating
 )
 ORDER BY mov_title
@@ -36,9 +49,11 @@ first and last name together with the title of the movie(s)
 they directed and received the rating.
 15.
 SELECT dir_fname, dir_lname, mov_title, rev_stars
-FROM (((director INNER JOIN movie_direction ON director.dir_id = movie_direction.dir_id)
-INNER JOIN movie ON movie_direction.mov_id = movie.mov_id)
-INNER JOIN rating ON movie.mov_id = rating.mov_id)
+FROM movie 
+INNER JOIN movie_direction USING mov_id
+INNER JOIN director USING dir_id
+INNER JOIN rating USING mov_id
+GROUP BY dir_id
 
 
 Write a query in SQL to find the movie title,
@@ -46,19 +61,56 @@ actor first and last name, and the role for those movies where one or more
 actors acted in two or more movies.
 16.
 SELECT act_fname, act_lname, role, mov_title
-FROM ((actor INNER JOIN movie_cast ON actor.act_id = movie_cast.act_id)
-INNER JOIN movie ON movie_cast.mov_id = movie.mov_id)
+FROM actor 
+INNER JOIN movie_cast ON actor.act_id = movie_cast.act_id
+INNER JOIN movie ON movie_cast.mov_id = movie.mov_id
 GROUP BY actor.act_id
-HAVING count(actor.act_id) > 1
+HAVING count(movie_cast.act_id) > 1
 ORDER BY act_fname ASC
 
 
-
+Write a query in SQL to find the first and last name of a director
+and the movie he or she directed, and the actress appeared which first name
+was Claire and last name was Danes along with her role in that movie.
 17.
+SELECT dir_fname, dir_lname, mov_title, act_fname, act_lname, role
+FROM movie 
+INNER JOIN movie_direction USING(mov_id)
+INNER JOIN movie_cast USING(mov_id)
+INNER JOIN actor USING(act_id)
+INNER JOIN director USING(dir_id)
+WHERE act_fname = "claire"
 
+
+Write a query in SQL to find the first and last name of an actor with their role
+in the movie which was also directed by themselve.
 18.
+SELECT dir_fname, dir_lname, mov_title, act_fname, act_lname, role
+FROM movie 
+INNER JOIN movie_direction USING(mov_id)
+INNER JOIN movie_cast USING(mov_id)
+INNER JOIN actor USING(act_id)
+INNER JOIN director USING(dir_id)
+WHERE act_fname = dir_fname
+AND act_lname = dir_lname
 
+
+Write a query in SQL to find the cast list for the movie Chinatown.
 19.
+SELECT act_fname, act_lname, mov_title
+FROM movie
+INNER JOIN movie_cast USING(mov_id)
+INNER JOIN actor USING(act_id)
+WHERE mov_title = 'Chinatown'
 
+
+Write a query in SQL to find the movie in which the actor appeared 
+whose first and last name are ‘Harrison’ and ‘Ford’.
 20.
+SELECT act_fname, act_lname, mov_title
+FROM movie
+INNER JOIN movie_cast USING(mov_id)
+INNER JOIN actor USING(act_id)
+WHERE act_fname = 'Harrison'
+AND act_lname = 'Ford'
 
