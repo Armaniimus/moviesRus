@@ -90,43 +90,71 @@
                 case '15':
                     $data = $this->DataHandler->readData(
                         "SELECT dir_fname, dir_lname, mov_title, rev_stars
-                        FROM (((director INNER JOIN movie_direction ON director.dir_id = movie_direction.dir_id)
-                        INNER JOIN movie ON movie_direction.mov_id = movie.mov_id)
-                        INNER JOIN rating ON movie.mov_id = rating.mov_id)"
+                        FROM director
+                        INNER JOIN movie_direction ON director.dir_id = movie_direction.dir_id
+                        INNER JOIN movie ON movie_direction.mov_id = movie.mov_id
+                        INNER JOIN rating ON movie.mov_id = rating.mov_id"
                     );
                     break;
 
                 case '16':
                     $data = $this->DataHandler->readData(
                         "SELECT act_fname, act_lname, role, mov_title
-                        FROM ((actor INNER JOIN movie_cast ON actor.act_id = movie_cast.act_id)
-                        INNER JOIN movie ON movie_cast.mov_id = movie.mov_id)
-                        HAVING count(actor.act_id) > 0
-                        ORDER BY act_fname ASC"
+                        FROM movie
+                        INNER JOIN movie_cast ON movie.mov_id = movie_cast.mov_id
+                        INNER JOIN actor ON movie_cast.act_id = actor.act_id
+                        WHERE actor.act_id IN(
+                            SELECT act_id
+                            FROM movie_cast
+                            GROUP BY act_id
+                            HAVING COUNT(*) >= 2
+                        )"
                     );
                     break;
 
                 case '17':
                     $data = $this->DataHandler->readData(
-                        ""
+                        "SELECT dir_fname, dir_lname, mov_title, act_fname, act_lname, role
+                        FROM movie
+                        INNER JOIN movie_direction USING(mov_id)
+                        INNER JOIN movie_cast USING(mov_id)
+                        INNER JOIN actor USING(act_id)
+                        INNER JOIN director USING(dir_id)
+                        WHERE act_fname = 'claire'"
                     );
                     break;
 
                 case '18':
                     $data = $this->DataHandler->readData(
-                        ""
+                        "SELECT dir_fname, dir_lname, mov_title, act_fname, act_lname, role
+                        FROM movie
+                        INNER JOIN movie_direction USING(mov_id)
+                        INNER JOIN movie_cast USING(mov_id)
+                        INNER JOIN actor USING(act_id)
+                        INNER JOIN director USING(dir_id)
+                        WHERE act_fname = dir_fname
+                        AND act_lname = dir_lname"
                     );
                     break;
 
                 case '19':
                     $data = $this->DataHandler->readData(
-                        ""
+                        "SELECT act_fname, act_lname, mov_title
+                        FROM movie
+                        INNER JOIN movie_cast USING(mov_id)
+                        INNER JOIN actor USING(act_id)
+                        WHERE mov_title = 'Chinatown'"
                     );
                     break;
 
                 case '20':
                     $data = $this->DataHandler->readData(
-                        ""
+                        "SELECT act_fname, act_lname, mov_title
+                        FROM movie
+                        INNER JOIN movie_cast USING(mov_id)
+                        INNER JOIN actor USING(act_id)
+                        WHERE act_fname = 'Harrison'
+                        AND act_lname = 'Ford'"
                     );
                     break;
             }
