@@ -31,7 +31,8 @@
                         $data[$i]["Film lengte"] = $data[$i]["Film lengte"] . " min";
                     }
 
-                    return $this->htmlElements->generateButtonedTable($data, 'result-table', [1,0,0]);
+                    return $this->htmlElements->advancedTable($data, 'result-table', [1,1,0]);
+                    // return $this->htmlElements->simpleTable($data, 'result-table');
                 } else {
                     return "Er zijn geen zoek resultaten gevonden";
                 }
@@ -165,7 +166,7 @@
                     }
                 }
 
-                return $this->htmlElements->generateButtonedTable($data, 'result-table', [1,0,0]);
+                return $this->htmlElements->advancedTable($data, 'result-table', [1,1,0]);
             } else {
                 return "Er zijn geen zoek resultaten gevonden";
             }
