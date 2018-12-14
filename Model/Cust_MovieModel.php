@@ -58,11 +58,11 @@
                     return $this->htmlElements->advancedTable($data, 'result-table', [1,1,0]);
                     // return $this->htmlElements->simpleTable($data, 'result-table');
                 } else {
-                    return "Er zijn geen zoek resultaten gevonden";
+                    return "<p>Er zijn geen zoek resultaten gevonden</p>";
                 }
 
             } else {
-                return 'Hier komen de resultaten van je zoek opdracht';
+                return '<p>Hier komen de resultaten van je zoek opdracht</p>';
             }
         }
 
@@ -96,6 +96,7 @@
                     FROM movie, rating, reviewer
                     WHERE movie.mov_id = rating.mov_id
                     AND rating.rev_id = reviewer.rev_id
+                    AND rev_name IS NOT NULL
                     ORDER BY rev_name, mov_title, rev_stars ASC"
                 );
                     break;
