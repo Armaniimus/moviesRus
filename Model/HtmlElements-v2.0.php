@@ -92,6 +92,42 @@ Class HtmlElements {
         return $table;
     }
 
+    /**
+     * The purpose of this tablegenerating function is to be simple enough
+     * for the newest programmers to understand and maybe expand on
+     *
+     * @param  array  $dataArray2d              the array needs to be an 2d array with a
+     *                                          numbered array around it and associative arrays inside
+     * @param  string $tablename(optional)      a name to use for the css class of the table
+     * @return string                           The return is a htmlTable
+     */
+    public function simpleTable(array $dataArray2d, string $tablename = "") {
+        // head
+        $thead = "<thead><tr>";
+        foreach ($dataArray2d as $key => $value) {
+            foreach ($value as $k => $v) {
+                $thead .= "<th>" . $k . "</th>";
+            }
+            break;
+        }
+        $thead .= "</tr></thead>";
+
+        // body
+        $tbody = "<tbody>";
+        foreach ($dataArray2d as $key => $value) {
+            $row = "<tr>";
+                foreach ($value as $k => $v) {
+                    $row .= "<td>" . $value[$k] . "</td>";
+                }
+            $row  .= "</tr>";
+            $tbody .= $row;
+        }
+        $tbody .= "</tbody>";
+
+        $table = "<table border='1' class='$tablename'>";
+        $table .= $thead;
+        $table .= $tbody;
+        $table .= "</table>";
 
         return $table;
     }
