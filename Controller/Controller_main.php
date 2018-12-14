@@ -11,15 +11,7 @@ class Controller_main {
 
     public function mydefault() {
         $searchbox = file_get_contents("view/partials/search.html");
-
-        if (isset($_POST['query'])) {
-            $value = $_POST['query'];
-            $value = substr($value, -2);
-            $resultbox = $this->Cust_MovieModel->Queries($value);
-        } else {
-            $resultbox = $this->Cust_MovieModel->SearchName();
-        }
-
+        $resultbox = $this->Cust_MovieModel->SearchName();
 
         $this->TemplatingSystem->setTemplateData("searchbox", $searchbox);
         $this->TemplatingSystem->setTemplateData("resultbox", $resultbox);
