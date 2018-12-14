@@ -54,7 +54,6 @@
 
 .resultbox p {
     padding: 0px 15px;
-    margin-bottom: -1px;
 }
 
 .result-table {
@@ -62,6 +61,10 @@
     border: 0px solid black;
     margin-left: -1px;
     border-collapse: collapse;
+}
+
+#year {
+    width: 82px
 }
 
 .result-table,
