@@ -11,44 +11,58 @@
         public function SearchName() {
 
             if (isset($_POST['submit']) ) {
+                $andBindingsArray = [];
+                $andString = '';
+
+
+
                 if (isset($_POST['name'])) {
-                    $_POST['name'] = trim($_POST['name'], " ");
-                    $name = $_POST['name'];
+                    $name = trim($_POST['name'], " ");
+                    $andBindingsArray['name'] = "%$name%";
                 } else {
-                    $name = '';
+                    $andBindingsArray['name'] = "%%";
                 }
+
 
                 if (isset($_POST['year'])) {
-                    $_POST['year'] = trim($_POST['year'], " ");
-                    $year = $_POST['year'];
-                } else {
-                    $year = '';
+                    $year = trim($_POST['year'], " ");
+                    if ($year !== "") {
+                        $andBindingsArray['year'] = $_POST['year'];
+                        $andString .= " AND mov_year = :year";
+                    }
                 }
 
-                if (isset($_POST['lenght'])) {
-                    $_POST['length'] = trim($_POST['length'], " ");
-                    $length = $_POST['lenght'];
-                } else {
-                    $length = '';
+                if (isset($_POST['month'])) {
+                    $month = trim($_POST['month'], " ");
+                    if ($month !== "") {
+                        $andBindingsArray['month'] = $_POST['month'];
+                        $andString .= " AND MONTH(mov_dt_rel) = :month";
+                    }
                 }
 
-                echo $length;
+                if (isset($_POST['day'])) {
+                    $day = trim($_POST['day'], " ");
+                    if ($day !== "") {
+                        $andBindingsArray['day'] = $_POST['day'];
+                        $andString .= " AND DAY(mov_dt_rel) = :day";
+                    }
+                }
+
+                // echo $andString . "<pre>";
+                // var_dump($andBindingsArray);
+                // echo "</pre>";
             }
 
             if (isset($_POST['submit'])) {
                 $data = $this->DataHandler->readData(
-                    "SELECT mov_title AS 'Titel', mov_year AS 'Release year', mov_time AS 'Film lengte'
+                    "SELECT mov_title AS 'Titel', mov_dt_rel AS 'Release date', mov_time AS 'Film lengte'
                     FROM movie
                     WHERE mov_title LIKE :name
-                    AND mov_year LIKE :year
-                    AND mov_time LIKE :length
+                    $andString
                     ",
-                    [
-                        'name' => "%$name%"
-                        ,'year' => "%$year%"
-                        ,'length' => "%$length%"
-                    ]
+                    $andBindingsArray
                 );
+
 
                 if ($data) {
                     for ($i=0; $i < count($data); $i++) {
