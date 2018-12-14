@@ -39,12 +39,41 @@
     cursor: pointer;
 }
 
+.resultbox {
+    border: solid black 1px;
+    padding: 15px 0px 0px 0px;
+    margin-right: -1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.result-table--wrapper {
+    margin-right: -1px;
+    overflow: auto;
+}
+
+.resultbox p {
+    padding: 0px 15px;
+    margin-bottom: -1px;
+}
+
 .result-table {
+    overflow: auto;
+    border: 0px solid black;
+    margin-left: -1px;
     border-collapse: collapse;
+}
+
+.result-table,
+.result-table tr,
+.result-table td,
+.result-table th {
+    border-right: 0px;
 }
 
 .result-table th,
 .result-table td {
+    border-bottom: 0px;
     padding: 5px;
 }
 
@@ -92,6 +121,19 @@ h2 {
     border-right: solid black 1px;
 }
 
+.result--h2 {
+    margin: -15px -1px 0 0;
+}
+
 main {
     padding: 15px;
+}
+
+label {
+    font-weight: 600;
+}
+
+.small-label {
+    font-weight: normal;
+    color: #666;
 }
