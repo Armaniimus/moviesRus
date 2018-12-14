@@ -10,20 +10,44 @@
 
         public function SearchName() {
 
-            if (isset($_POST['name'])) {
-                $_POST['name'] = trim($_POST['name'], " ");
+            if (isset($_POST['submit']) ) {
+                if (isset($_POST['name'])) {
+                    $_POST['name'] = trim($_POST['name'], " ");
+                    $name = $_POST['name'];
+                } else {
+                    $name = '';
+                }
+
+                if (isset($_POST['year'])) {
+                    $_POST['year'] = trim($_POST['year'], " ");
+                    $year = $_POST['year'];
+                } else {
+                    $year = '';
+                }
+
+                if (isset($_POST['lenght'])) {
+                    $_POST['length'] = trim($_POST['length'], " ");
+                    $length = $_POST['lenght'];
+                } else {
+                    $length = '';
+                }
+
+                echo $length;
             }
 
-            if (isset($_POST['submit'])
-            && isset($_POST['name'])
-            &&  $_POST['name'] !== "") {
-                $name = $_POST['name'];
-
+            if (isset($_POST['submit'])) {
                 $data = $this->DataHandler->readData(
                     "SELECT mov_title AS 'Titel', mov_year AS 'Release year', mov_time AS 'Film lengte'
                     FROM movie
-                    WHERE mov_title LIKE :name",
-                    ['name' => "%$name%"]
+                    WHERE mov_title LIKE :name
+                    AND mov_year LIKE :year
+                    AND mov_time LIKE :length
+                    ",
+                    [
+                        'name' => "%$name%"
+                        ,'year' => "%$year%"
+                        ,'length' => "%$length%"
+                    ]
                 );
 
                 if ($data) {
