@@ -15,6 +15,15 @@ class Controller_main {
 
         $this->TemplatingSystem->setTemplateData("searchbox", $searchbox);
         $this->TemplatingSystem->setTemplateData("resultbox", $resultbox);
+
+
+        $this->TemplatingSystem->setTemplateData("resCount", $_SESSION['resCount']);
+        $this->TemplatingSystem->setTemplateData("name", $_SESSION['name']);
+        $this->TemplatingSystem->setTemplateData("day", $_SESSION['day']);
+        $this->TemplatingSystem->setTemplateData("month", $_SESSION['month']);
+        $this->TemplatingSystem->setTemplateData("year", $_SESSION['year']);
+
+
         $this->TemplatingSystem->setTemplateData("appdir", APP_DIR);
         return $this->TemplatingSystem->getParsedTemplate();
     }
