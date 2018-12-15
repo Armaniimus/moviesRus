@@ -26,7 +26,10 @@
 
     padding: 5px;
     max-width: 300px;
-    width: 100%;
+    float:left;
+    width: calc(50% - 10px);
+    margin: 5px;
+
 }
 
 .button:hover {
@@ -139,4 +142,5 @@ label {
 .small-label {
     font-weight: normal;
     color: #666;
+    padding: 5px;
 }
