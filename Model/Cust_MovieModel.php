@@ -91,6 +91,8 @@
                         ,rev_stars AS 'Beoordeling'
                         ,act_fname AS 'Voornaam acteur'
                         ,act_lname AS 'Achternaam acteur'
+                        ,role AS 'rol'
+
                     FROM movie
                     LEFT JOIN movie_cast USING(mov_id)
                     LEFT JOIN actor USING(act_id)
@@ -112,7 +114,7 @@
                         }
                     }
 
-                    return $this->htmlElements->advancedTable($data, 'result-table', [1,1,0]);
+                    return $this->htmlElements->customAdvancedTable($data, 'result-table', [1,1,0]);
                     // return $this->htmlElements->simpleTable($data, 'result-table');
                 } else {
                     return "<p>Er zijn geen zoek resultaten gevonden</p>";

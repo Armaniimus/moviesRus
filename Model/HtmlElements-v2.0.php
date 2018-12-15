@@ -21,7 +21,7 @@ Class HtmlElements {
      * @param  string $specialColumnName a column title for the extra collumns
      * @return
      */
-    public function advancedTable(array $dataArray2d, string $tablename, array $option, array $extraColumnsArray = NULL, string $specialColumnName = NULL) {
+    public function CustomadvancedTable(array $dataArray2d, string $tablename, array $option, array $extraColumnsArray = NULL, string $specialColumnName = NULL) {
 
         if (!empty($extraColumnsArray) ) {
             $extraLength = count($extraColumnsArray[0]);
@@ -47,7 +47,8 @@ Class HtmlElements {
         //  start of head generation
         $head = "<thead class='$tablename--thead'>";
             foreach ($dataArray2d as $key => $value) {
-                $row = "<tr class='$tablename--tr'>";
+                $row = "<tr class='$tablename--tr'><th colspan='4'>Film</th><th colspan='3'>Acteur</th></tr>";
+                $row .= "<tr class='$tablename--tr'>";
                 "<td></td>";
                     foreach ($value as $columnName => $v) {
                         $columnName[0] = strToUpper($columnName[0]);
@@ -255,6 +256,92 @@ Class HtmlElements {
     private function combineForm($head, $main, $footer) {
         $form = $head . $main . $footer;
         return $form;
+    }
+    /**
+     * this method is used to generate a table with data contained in them
+     * @param  array  $dataArray2d       2 dimensional array the outer being an assoc array and the inner being numbered
+     * @param  string $htmlTableName     a name that is used as id for the html table
+     *                                   also the following html classes are generated to be used in css
+     *                                   $tablename, $tablename--thead, $tablename--tbody, $tablename--tr, $tablename--th, $tablename--td
+     *
+     * @param  array  $option            an array or string with booleans
+     *                                   option[0] border?
+     *                                   option[1] width 100%?
+     *                                   option[2] future use
+     *
+     * @param  array  $extraColumnsArray an array with extra column to be added can be used to extent functionality
+     * @param  string $specialColumnName a column title for the extra collumns
+     * @return
+     */
+    public function advancedTable(array $dataArray2d, string $tablename, array $option, array $extraColumnsArray = NULL, string $specialColumnName = NULL) {
+
+        if (!empty($extraColumnsArray) ) {
+            $extraLength = count($extraColumnsArray[0]);
+        } else {
+            $extraLength = 0;
+        }
+
+        $border = "";
+        $width = "";
+
+        if ($option[0] == "1") {
+            $border = "border='1'";
+        }
+
+        if ($option[1] == "1") {
+            $width = "width='100%'";
+        }
+
+        if ($option[2] == "1") {
+            // select checkboxes
+        }
+
+        //  start of head generation
+        $head = "<thead class='$tablename--thead'>";
+            foreach ($dataArray2d as $key => $value) {
+                $row = "<tr class='$tablename--tr'>";
+                "<td></td>";
+                    foreach ($value as $columnName => $v) {
+                        $columnName[0] = strToUpper($columnName[0]);
+                        $row .= "<th class='$tablename--th'>" . $columnName . "</th>";
+                    }
+                    if ($extraLength > 0) {
+                        $extraColumnName[0] = strToUpper($extraColumnName[0]);
+                        $row .= "<th class='$tablename--th' colspan='$extraLength'>$extraColumnName</th>";
+                    }
+
+                $row .= "</tr>";
+                $head .= $row;
+                break;
+            }
+        $head .= "</thead>";
+
+        // body generation
+        $body = "<tbody class='$tablename--tbody'>";
+            $i=0;
+            foreach ($dataArray2d as $key => $value) {
+                $row = "<tr class='$tablename--tr'>";
+                    foreach ($value as $k => $v) {
+                        $row .= "<td class='$tablename--td'>" . $value[$k] . "</td>";
+                    }
+
+                    if ($extraColumnsArray !== NULL) {
+                        for ($ii=0; $ii < count($extraColumnsArray[$i]); $ii++) {
+                            $row .= $extraColumnsArray[$i][$ii];
+                        }
+                    }
+                $row  .= "</tr>";
+                $body .= $row;
+                $i++;
+            }
+        $body .= "</tbody>";
+
+        $table = "<table $border $width class='$tablename' id='$tablename'>";
+        $table .= $head;
+        $table .= $body;
+        $table .= "</table>";
+
+        return $table;
     }
 }
 
