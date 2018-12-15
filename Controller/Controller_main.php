@@ -23,6 +23,10 @@ class Controller_main {
         $this->TemplatingSystem->setTemplateData("month", $_SESSION['month']);
         $this->TemplatingSystem->setTemplateData("year", $_SESSION['year']);
 
+        $this->TemplatingSystem->setTemplateData("act_fname", $_SESSION['act_fname']);
+        $this->TemplatingSystem->setTemplateData("act_lname", $_SESSION['act_lname']);
+        $this->TemplatingSystem->setTemplateData("rating", $_SESSION['rating']);
+
 
         $this->TemplatingSystem->setTemplateData("appdir", APP_DIR);
         return $this->TemplatingSystem->getParsedTemplate();
