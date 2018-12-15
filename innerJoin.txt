@@ -61,12 +61,15 @@ actor first and last name, and the role for those movies where one or more
 actors acted in two or more movies.
 16.
 SELECT act_fname, act_lname, role, mov_title
-FROM actor 
-INNER JOIN movie_cast ON actor.act_id = movie_cast.act_id
-INNER JOIN movie ON movie_cast.mov_id = movie.mov_id
-GROUP BY actor.act_id
-HAVING count(movie_cast.act_id) > 1
-ORDER BY act_fname ASC
+FROM movie
+INNER JOIN movie_cast ON movie.mov_id = movie_cast.mov_id
+INNER JOIN actor ON movie_cast.act_id = actor.act_id
+WHERE actor.act_id IN(
+    SELECT act_id
+    FROM movie_cast
+    GROUP BY act_id
+    HAVING COUNT(*) >= 2
+)
 
 
 Write a query in SQL to find the first and last name of a director
