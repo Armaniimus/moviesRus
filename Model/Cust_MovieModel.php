@@ -50,6 +50,33 @@
                     }
                 }
 
+                if (isset($_POST['act_fname'])) {
+                    $act_fname = trim($_POST['act_fname'], " ");
+                    if ($act_fname !== "") {
+                        $andBindingsArray['act_fname'] = "%$act_fname%";
+                        $andString .= " AND act_fname LIKE :act_fname";
+                        $_SESSION["act_fname"] = $act_fname;
+                    }
+                }
+
+                if (isset($_POST['act_lname'])) {
+                    $act_lname = trim($_POST['act_lname'], " ");
+                    if ($act_lname !== "") {
+                        $andBindingsArray['act_lname'] = "%$act_lname%";
+                        $andString .= " AND act_lname LIKE :act_lname";
+                        $_SESSION["act_lname"] = $act_lname;
+                    }
+                }
+
+                if (isset($_POST['rating'])) {
+                    $rating = trim($_POST['rating'], " ");
+                    if ($rating !== "") {
+                        $andBindingsArray['rating'] = $rating;
+                        $andString .= " AND rev_stars = :rating";
+                        $_SESSION["rating"] = $rating;
+                    }
+                }
+
                 // echo $andString . "<pre>";
                 // var_dump($andBindingsArray);
                 // echo "</pre>";
