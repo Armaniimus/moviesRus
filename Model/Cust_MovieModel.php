@@ -103,6 +103,7 @@
                     ",
                     $andBindingsArray
                 );
+                echo $andString;
 
 
                 if ($data) {
